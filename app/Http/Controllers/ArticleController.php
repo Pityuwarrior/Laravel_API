@@ -12,29 +12,29 @@ class ArticleController extends Controller
     }
     
     /*Getting one*/
-    public function show($id){
-        return Article::find($id);
+    public function show(Article $article){
+        return $article;
     }
          
     
     /*Creating one*/
     public function store(Request $request){
-        return Article::create($request->all());
+        $article = Article::create($request->all());
+        
+        return response()->json($article, 201/*Object created successfuly*/);
     }
     
     /*Updating one*/
-    public function update(Request $request, $id){
-        $artical = Article::findOrFail($id);
-        $artical->update($request->all());
+    public function update(Request $request, Article $article){
+        $article->update($request->all());
     
-        return $artical;
+        return response()->json($article, 200/*Success*/);
     }
     
     /*Delete one*/
     public function delete(Request $request, $id){
-        $artical = Article::findOrFail($id);
-        $artical->delete();
+        $article->delete();
     
-        return 204;
+        return response()->json(null, 204/*No content retun, Success*/);
     }
 }

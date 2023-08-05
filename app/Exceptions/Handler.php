@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Foundation\Eloquent\ModelNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -26,5 +27,14 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /*Hidding important data from the user*/
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof ModelNotFoundException){
+            return response()->json(['error' => 'Resource not found'], 404);
+        }
+        return parent::render($request, $exception);
     }
 }
