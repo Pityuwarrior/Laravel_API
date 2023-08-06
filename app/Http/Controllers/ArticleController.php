@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Article;
-
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -16,7 +15,6 @@ class ArticleController extends Controller
         return $article;
     }
          
-    
     /*Creating one*/
     public function store(Request $request){
         $article = Article::create($request->all());
@@ -32,7 +30,7 @@ class ArticleController extends Controller
     }
     
     /*Delete one*/
-    public function delete(Request $request, $id){
+    public function delete(Request $request, Article $article){
         $article->delete();
     
         return response()->json(null, 204/*No content retun, Success*/);
